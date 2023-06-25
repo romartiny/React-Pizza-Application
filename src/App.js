@@ -9,12 +9,13 @@ import Skeleton from "./components/PizzaBlock/Skeleton";
 
 function App() {
   const [items, setItems] = useState([]);
-  //https://64984c6b9543ce0f49e1dc4a.mockapi.io/items
+  const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
     fetch('https://64984c6b9543ce0f49e1dc4a.mockapi.io/items')
       .then((res) => res.json())
       .then((data) => setItems(data))
+      .then(() => setIsLoading(false))
   }, [])
 
   return (
@@ -29,9 +30,8 @@ function App() {
           <h2 className="content__title">Все пиццы</h2>
           <div className="content__items">
             {
-              items.map((pizza) => (
-                <Skeleton {...pizza} key={pizza.id}/>
-              ))
+              isLoading ? [...new Array(6)].map((item) => <Skeleton key={item}/>)
+                : items.map((item) => <PizzaBlock key={item.id} {...item}/>)
             }
           </div>
         </div>
