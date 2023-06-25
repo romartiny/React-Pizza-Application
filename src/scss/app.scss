@@ -14,13 +14,18 @@ body {
   margin: 50px auto;
   border-radius: 10px;
   max-width: 1400px;
+
+  @media (max-width: 645px) {
+    width: calc(100vw - 30px);
+    margin-top: 45px;
+  }
 }
 
 .content {
   padding: 40px 0;
 
   &__title {
-    margin: 35px 0;
+    margin: 35px 30px;
   }
 
   &__items {
@@ -55,7 +60,8 @@ body {
         overflow: scroll;
 
         ul {
-          width: 785px;
+          width: 465px;
+          padding-left: 10px;
         }
       }
 
