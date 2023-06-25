@@ -25,7 +25,7 @@ body {
   padding: 40px 0;
 
   &__title {
-    margin: 35px 30px;
+    margin: 35px 40px;
   }
 
   &__items {
@@ -53,6 +53,7 @@ body {
     display: flex;
     align-items: center;
     justify-content: space-between;
+    padding: 5px 25px;
 
     @media (max-width: 1260px) {
       .categories {
@@ -160,6 +161,10 @@ body {
         color: darken($color: #b6b6b6, $amount: 50);
       }
     }
+  }
+
+  .content__items {
+    display: block;
   }
 
   &__item {
