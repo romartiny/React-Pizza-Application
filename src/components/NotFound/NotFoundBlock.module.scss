@@ -1,7 +1,12 @@
 .root {
   text-align: center;
-}
 
-.code {
-  font-size: 96px;
+  .code {
+    margin-right: 25px;
+  }
+
+  .description {
+    font-size: 30px;
+    margin-top: 20px;
+  }
 }
