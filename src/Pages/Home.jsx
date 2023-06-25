@@ -2,6 +2,7 @@ import React, {useEffect, useState} from 'react';
 import Sort from "../components/Sort";
 import Skeleton from "../components/PizzaBlock/Skeleton";
 import PizzaBlock from "../components/PizzaBlock/PizzaBlock";
+import Categories from "../components/Categories";
 
 export const Home = () => {
   const [items, setItems] = useState([]);
@@ -17,7 +18,7 @@ export const Home = () => {
   return (
     <>
       <div className="content__top">
-        {/*<Categories />*/}
+        <Categories />
         <Sort />
       </div>
       <h2 className="content__title">Все пиццы</h2>
