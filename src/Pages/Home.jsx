@@ -8,15 +8,24 @@ export const Home = () => {
   const [items, setItems] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const [categoryId, setCategoryId] = useState(0);
-  const [sortType, setSortType] = useState(0);
+  const [sortType, setSortType] = useState({
+    name: 'popularity',
+    sortProperty: 'rating'
+  });
 
   useEffect(() => {
-    fetch('https://64984c6b9543ce0f49e1dc4a.mockapi.io/items?category=' + categoryId)
+    setIsLoading(true);
+
+    const order = sortType.sortProperty.includes('-') ? 'asc' : 'desc';
+    const sortBy = sortType.sortProperty.replace('-', '');
+    const category = categoryId > 0 ? `category=${categoryId}` : '';
+
+    fetch(`https://64984c6b9543ce0f49e1dc4a.mockapi.io/items?${category}&sortBy=${sortBy}&order=${order}`)
       .then((res) => res.json())
       .then((data) => setItems(data))
       .then(() => setIsLoading(false))
     window.scrollTo(0, 0);
-  }, [categoryId])
+  }, [categoryId, sortType])
 
   return (
     <div className='conatiner'>

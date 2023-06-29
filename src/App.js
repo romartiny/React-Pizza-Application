@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useState} from "react";
 
 import Header from "./components/Header";
 
@@ -9,9 +9,11 @@ import NotFound from "./Pages/NotFound";
 import Cart from "./Pages/Cart";
 
 function App() {
+  const [searchValue, setSearchValue] = useState('');
+
   return (
     <div className="wrapper">
-      <Header />
+      <Header searchValue={searchValue} setSearchValue={setSearchValue} />
       <div className="content">
           <Routes>
             <Route path="/" element={<Home />} />
