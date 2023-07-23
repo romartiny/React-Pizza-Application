@@ -1,33 +1,44 @@
 import React, {useEffect, useState} from 'react';
+import axios from "axios";
 import Sort from "../components/Sort";
 import Skeleton from "../components/PizzaBlock/Skeleton";
 import PizzaBlock from "../components/PizzaBlock/PizzaBlock";
 import Categories from "../components/Categories";
 import Pagination from "../components/Pagination/Pagination";
 
-export const Home = ({ searchValue }) => {
+import {useSelector, useDispatch} from "react-redux";
+import {setCategoryId, setCurrentPage} from "../redux/slices/filterSlice";
+
+export const Home = ({searchValue}) => {
+  const dispatch = useDispatch();
+
+  const {categoryId, sort, currentPage} = useSelector(state => state.filter);
+  const sortType = sort.sortProperty;
+
   const [items, setItems] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
-  const [categoryId, setCategoryId] = useState(0);
-  const [sortType, setSortType] = useState({
-    name: 'popularity',
-    sortProperty: 'rating'
-  });
-  const [currentPage, setCurrentPage] = useState(1);
+
+  const onClickCategory = (id) => {
+    dispatch(setCategoryId(id));
+  };
+
+  const onChangePage = (number) => {
+    dispatch(setCurrentPage(number))
+  };
 
 
   useEffect(() => {
     setIsLoading(true);
 
-    const order = sortType.sortProperty.includes('-') ? 'asc' : 'desc';
-    const sortBy = sortType.sortProperty.replace('-', '');
+    const order = sortType.includes('-') ? 'asc' : 'desc';
+    const sortBy = sortType.replace('-', '');
     const category = categoryId > 0 ? `category=${categoryId}` : '';
 
-    fetch(`https://64984c6b9543ce0f49e1dc4a.mockapi.io/items?page=${currentPage}&limit=4&${category}&sortBy=${sortBy}&order=${order}`)
-      .then((res) => res.json())
-      .then((data) => setItems(data))
-      .then(() => setIsLoading(false))
-    // window.scrollTo(0, 0);
+    axios.get(`https://64984c6b9543ce0f49e1dc4a.mockapi.io/items?page=${currentPage}&limit=4&${category}&sortBy=${sortBy}&order=${order}`)
+      .then(res => {
+        setItems(res.data);
+        setIsLoading(false);
+      })
   }, [categoryId, sortType, searchValue, currentPage])
 
   const skeletons = [...new Array(6)].map((item, index) => <Skeleton key={index}/>);
@@ -38,8 +49,8 @@ export const Home = ({ searchValue }) => {
   return (
     <div className='conatiner'>
       <div className="content__top">
-        <Categories value={categoryId} onClickCategory={(id) => setCategoryId(id)} />
-        <Sort value={sortType} onClickSort={(id) => setSortType(id)} />
+        <Categories value={categoryId} onClickCategory={(id) => onClickCategory(id)}/>
+        <Sort/>
       </div>
       <h2 className="content__title">Menu</h2>
       <div className="content__items">
@@ -49,7 +60,7 @@ export const Home = ({ searchValue }) => {
             : pizzas
         }
       </div>
-      <Pagination onChangePage={number => setCurrentPage(number)}/>
+      <Pagination value={currentPage} onChangePage={onChangePage}/>
     </div>
   )
 }
