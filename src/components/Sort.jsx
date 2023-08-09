@@ -24,8 +24,6 @@ function Sort() {
     setOpen(false);
   };
 
-  console.log(sortRef);
-
   useEffect(() => {
     const handleClickOutside = (event) => {
         if (!event.path.includes(sortRef.current)) {

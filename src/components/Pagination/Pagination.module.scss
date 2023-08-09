@@ -1,10 +1,14 @@
+.box {
+  margin-left: 30px;
+  margin: 0 auto;
+  width: 100%;
+  text-align: center;
+}
+
 .root {
   li {
-    display: flex;
-    flex-direction: row;
-    flex-wrap: wrap;
-    align-content: stretch;
-    justify-content: center;
+    display: inline;
+    margin-left: 5px;
 
     &.selected {
       background-color: #fe5f1e;
@@ -32,6 +36,11 @@
     }
   }
   :global {
+    ul {
+      display: flex;
+      margin-left: 42px;
+    }
+
     .selected {
       a {
         background-color: #fe5f1e;
