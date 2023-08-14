@@ -21,7 +21,7 @@ export const Home = ({searchValue}) => {
   const isMounted = useRef(false);
 
   const {categoryId, sort, currentPage} = useSelector(state => state.filter);
-  const items = useSelector(state => state.pizza.items);
+  const {items, status} = useSelector(state => state.pizza);
   const sortType = sort.sortProperty;
 
   const onClickCategory = (id) => {
@@ -33,28 +33,19 @@ export const Home = ({searchValue}) => {
   };
 
   const getPizzas = async () => {
-    setIsLoading(true);
 
     const order = sortType.includes('-') ? 'asc' : 'desc';
     const sortBy = sortType.replace('-', '');
     const category = categoryId > 0 ? `category=${categoryId}` : '';
     const search = searchValue ? `&search=${searchValue}` : '';
 
-    try {
-      dispatch(fetchPizzas({
-        sortBy,
-        order,
-        currentPage,
-        category,
-        search,
-      }));
-    } catch (err) {
-      console.error(err);
-    } finally {
-      setIsLoading(false);
-    }
-
-    setIsLoading(false);
+    dispatch(fetchPizzas({
+      order,
+      sortBy,
+      category,
+      search,
+      currentPage
+    }))
   }
 
   useEffect(() => {
@@ -106,13 +97,13 @@ export const Home = ({searchValue}) => {
         <Sort/>
       </div>
       <h2 className="content__title">Menu</h2>
-      <div className="content__items">
-        {
-          isLoading
-            ? skeletons
-            : pizzas
-        }
-      </div>
+      {
+        status === 'error' ?
+          <div>
+            <h2>Cart is empty 😕</h2>
+            <p>Chances are, you probably haven't ordered a pizza yet. To order pizza, go to the home page. </p>
+          </div> : <div className="content__items">{status === 'loading' ? skeletons : pizzas}</div>
+      }
       <Pagination value={currentPage} onChangePage={onChangePage}/>
     </div>
   )
