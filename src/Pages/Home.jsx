@@ -6,7 +6,7 @@ import PizzaBlock from "../components/PizzaBlock/PizzaBlock";
 import Categories from "../components/Categories";
 import Pagination from "../components/Pagination/Pagination";
 import qs from "qs";
-import {useNavigate} from "react-router-dom";
+import {Link, useNavigate} from "react-router-dom";
 
 import {useSelector, useDispatch} from "react-redux";
 import {selectFilter, setCategoryId, setCurrentPage, setFilters} from "../redux/slices/filterSlice";
@@ -86,7 +86,7 @@ export const Home = () => {
   const skeletons = [...new Array(6)].map((item, index) => <Skeleton key={index}/>);
 
   const pizzas = items.filter((obj) => obj.title.toLowerCase().includes(searchValue.toLowerCase()))
-    .map((item) => <PizzaBlock key={item.id} {...item}/>);
+    .map((item) => <Link key={item.id} to={`/pizza/${item.id}`}><PizzaBlock {...item}/></Link>);
 
   return (
     <div className='conatiner'>
