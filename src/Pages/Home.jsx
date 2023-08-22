@@ -1,5 +1,5 @@
 import React, {useEffect, useRef} from 'react';
-import Sort from "../components/Sort.jsx";
+import Sort from "../components/Sort.tsx";
 import {sortTypes} from "../components/Sort.js";
 import Skeleton from "../components/PizzaBlock/Skeleton";
 import PizzaBlock from "../components/PizzaBlock/PizzaBlock";
