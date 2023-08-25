@@ -1,4 +1,4 @@
-import {useState} from "react";
+import React, {useState} from "react";
 import {useSelector, useDispatch} from "react-redux";
 
 import {addItem} from "../../redux/slices/cartSlice";
@@ -6,11 +6,21 @@ import {selectCartItemById} from "../../redux/slices/pizzaSlice";
 
 const pizzaTypes = ['light', 'normal'];
 
-function PizzaBlock({id, title, price, imageUrl, sizes, types}) {
+type PizzaBlockProps = {
+  id: string,
+  title: string,
+  price: number,
+  imageUrl: string,
+  sizes: number[],
+  types: number[],
+  rating: number,
+}
+
+const PizzaBlock: React.FC<PizzaBlockProps> = ({id, title, price, imageUrl, sizes, types, rating}) => {
   const dispatch = useDispatch();
   const cartItem = useSelector(selectCartItemById(id));
-  const [activeType, setActiveType] = useState(0);
-  const [activeSize, setActiveSize] = useState(0);
+  const [activeType, setActiveType] = useState<number>(0);
+  const [activeSize, setActiveSize] = useState<number>(0);
 
   const addedCount = cartItem ? cartItem.count : 0;
 
@@ -26,11 +36,11 @@ function PizzaBlock({id, title, price, imageUrl, sizes, types}) {
     dispatch(addItem(item));
   }
 
-  const onClickType = (activeIndex) => {
+  const onClickType = (activeIndex: any) => {
     setActiveType(activeIndex);
   };
 
-  const onClickSize = (activeIndex) => {
+  const onClickSize = (activeIndex: any) => {
     setActiveSize(activeIndex);
   }
 
@@ -50,7 +60,7 @@ function PizzaBlock({id, title, price, imageUrl, sizes, types}) {
                 <li onClick={() => onClickType(type)}
                     className={activeType === type ? 'active' : ''}
                     key={index}>
-                  {pizzaTypes[type]}
+                  {pizzaTypes[type]} {rating}
                 </li>
               ))
             }

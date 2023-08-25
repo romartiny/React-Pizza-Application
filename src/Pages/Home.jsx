@@ -1,6 +1,6 @@
 import React, {useEffect, useRef} from 'react';
 import Sort from "../components/Sort.tsx";
-import {sortTypes} from "../components/Sort.js";
+import {sortTypes} from "../components/Sort";
 import Skeleton from "../components/PizzaBlock/Skeleton";
 import PizzaBlock from "../components/PizzaBlock/PizzaBlock";
 import Categories from "../components/Categories";

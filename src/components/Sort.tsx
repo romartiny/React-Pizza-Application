@@ -20,7 +20,7 @@ export const sortTypes: SortItem[] = [
 function Sort() {
     const dispatch = useDispatch();
     const sort = useSelector(selectSort);
-    const sortRef = useRef(null);
+    const sortRef = useRef<HTMLDivElement>(null);
 
     const [open, setOpen] = useState(false);
 
@@ -30,15 +30,15 @@ function Sort() {
     };
 
     useEffect(() => {
-        const handleClickOutside = (event) => {
+        const handleClickOutside = (event: any) => {
             if (!event.path.includes(sortRef.current)) {
                 setOpen(false);
             }
         }
-        document.body.addEventListener('click', event => handleClickOutside)
+        document.body.addEventListener('click',  handleClickOutside)
 
         return () => {
-            document.body.removeEventListener('click', event => handleClickOutside)
+            document.body.removeEventListener('click', handleClickOutside)
         }
     }, []);
 

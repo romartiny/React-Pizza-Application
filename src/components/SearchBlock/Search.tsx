@@ -1,4 +1,4 @@
-import React, {useCallback, useContext, useRef} from 'react';
+import React, {useCallback, useRef} from 'react';
 import debounce from 'lodash.debounce';
 import styles from './Search.module.scss';
 import {useState} from "react";
@@ -8,7 +8,7 @@ import {setSearchValue} from "../../redux/slices/filterSlice";
 const Search = () => {
   const dispatch = useDispatch();
   const [value, setValue] = useState('');
-  const inputRef = useRef(null);
+  const inputRef = useRef<HTMLInputElement>(null);
 
   const onClickClear = () => {
     dispatch(setSearchValue(''));
